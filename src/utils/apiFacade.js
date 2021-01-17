@@ -81,8 +81,15 @@ function apiFacade() {
       name: sport.name,
       description: sport.description,
     }); //True add's the token
-    console.log(sport);
+
     return fetch(URL + "/api/sport/addsport", options).then(handleHttpErrors);
+  };
+
+  const fetchAllSportTeams = () => {
+    const options = makeOptions("GET");
+    return fetch(URL + "/api/sport/allsportteams", options).then(
+      handleHttpErrors
+    );
   };
 
   const fetchStarwars = () => {
@@ -119,6 +126,7 @@ function apiFacade() {
     fetchAllSports,
     addNewSport,
     addNewSportTeam,
+    fetchAllSportTeams,
   };
 }
 

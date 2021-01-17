@@ -58,7 +58,6 @@ function TableOfSports() {
   console.log(newSportTeamFromSever);
   const sportItems = dataFromServerObj.map((sport) => (
     <tr key={sport.name}>
-      <th scope="row"></th>
       <td>{sport.name}</td>
       <td>{sport.description}</td>
       <button onClick={createNewSport}>Delete</button>
@@ -75,7 +74,6 @@ function TableOfSports() {
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
           </tr>
