@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import facade from "./apiFacade";
+import facade from "../utils/apiFacade.js";
+import TableOfSports from "./SportTableUser.js";
 import LogIn, { LoggedIn } from "./LogIn.js";
 import Header from "./Header.js";
 import Starwars from "./Starwars.js";
 import Admin from "./Admin.js";
 import User from "./User.js";
-import {
-  Switch,
-  Route
-} from "react-router-dom";
+import SportTableUser from "./SportTableUser.js";
+import SportTableAdmin from "./SportTableAdmin.js";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -33,23 +33,35 @@ function App() {
     <div>
       <Header />
       <Switch>
-        <Route path="/starwars">
-          <Starwars />
+        <Route path="/sport">
+          <TableOfSports />
         </Route>
+
         {!loggedIn ? (
           <div>
             <Route exact path="/">
               <LogIn login={login} />
               <p>{error}</p>
               <h3>Hejsa, hvis du ikke er Lukas, så velkommen:</h3>
-                  <p>Dette er velkomstsiden til vores startcode.<br/>
-                  Log ind som user/testuser eller admin/testadmin.<br/>
-                  Som user og admin kan man tilgå begge brugerheadere.<br/>
-                  Afhængigt af hvilken rolle man har, får man fremvist en<br/>
-                  besked, der fortæller om man er logget ind som bruger eller admin.<br/><br/>
-                  Man kan tilgå Starwars-route uanset om man er logget ind.<br/>
-                  Komponentet fetcher fra swapi.com, fra fem forskellige endpoints. Et for hver linje.<br/>
-                </p>
+              <p>
+                Dette er velkomstsiden til vores startcode.
+                <br />
+                Log ind som user/testuser eller admin/testadmin.
+                <br />
+                Som user og admin kan man tilgå begge brugerheadere.
+                <br />
+                Afhængigt af hvilken rolle man har, får man fremvist en
+                <br />
+                besked, der fortæller om man er logget ind som bruger eller
+                admin.
+                <br />
+                <br />
+                Man kan tilgå Starwars-route uanset om man er logget ind.
+                <br />
+                Komponentet fetcher fra swapi.com, fra fem forskellige
+                endpoints. Et for hver linje.
+                <br />
+              </p>
             </Route>
           </div>
         ) : (
@@ -63,7 +75,7 @@ function App() {
             <div>
               <Route path="/user">
                 {facade.getRole() === "user" ? (
-                  <User />
+                  <SportTableUser />
                 ) : (
                   <p>Du er ikke logget ind som user</p>
                 )}
@@ -72,7 +84,7 @@ function App() {
             <div>
               <Route path="/admin">
                 {facade.getRole() === "admin" ? (
-                  <Admin />
+                  <SportTableAdmin />
                 ) : (
                   <p>Du er ikke logget ind som admin</p>
                 )}
