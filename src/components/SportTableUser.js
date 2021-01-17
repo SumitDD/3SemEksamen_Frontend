@@ -18,11 +18,6 @@ function TableOfSports() {
     setDataFromServerObj(allSports);
   }, []);
 
-  const onChange = (evt) => {
-    evt.preventDefault();
-    //setInput(evt.target.value);
-  };
-
   const getAllSports = (evt) => {
     evt.preventDefault();
     facade.fetchAllSports().then((data) => setDataFromServerObj(data));

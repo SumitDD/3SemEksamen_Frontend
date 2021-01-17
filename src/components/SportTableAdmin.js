@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import facade from "../utils/apiFacade.js";
 import React, { useState, useEffect } from "react";
+import SportTeamTable from "./SportTeamAdmin.js";
 
 function TableOfSports() {
   let allSports = [
@@ -15,8 +16,19 @@ function TableOfSports() {
     description: "",
   };
 
+  let newSportTeam = {
+    pricePerYear: "",
+    teamName: "",
+    minAge: "",
+    maxAge: "",
+    sport: "",
+  };
+
   const [dataFromServerObj, setDataFromServerObj] = useState(allSports);
   const [newDataFromServerObj, setNewDataFromServerObj] = useState(newSport);
+  const [newSportTeamFromSever, setNewSportTeamFromServer] = useState(
+    newSportTeam
+  );
   const [reloadTable, setReloadTable] = useState(false);
 
   const onChangeNewUser = (evt) => {
@@ -31,7 +43,19 @@ function TableOfSports() {
     evt.preventDefault();
     facade.addNewSport(newDataFromServerObj);
   };
+  const onChangeNewSportTeam = (evt) => {
+    evt.preventDefault();
+    setNewSportTeamFromServer({
+      ...newSportTeamFromSever,
+      [evt.target.id]: evt.target.value,
+    });
+  };
 
+  const addNewSportTeam = (evt) => {
+    evt.preventDefault();
+    facade.addNewSportTeam(newSportTeamFromSever);
+  };
+  console.log(newSportTeamFromSever);
   const sportItems = dataFromServerObj.map((sport) => (
     <tr key={sport.name}>
       <th scope="row"></th>
@@ -65,6 +89,18 @@ function TableOfSports() {
           <input placeholder="Name" id="name" />
           <input placeholder="Description" id="description" />
           <button onClick={createNewSport}>Click</button>
+        </form>
+      </div>
+
+      <div className="col-3">
+        <h2>Add new Sportteam</h2>
+        <form onChange={onChangeNewSportTeam}>
+          <input placeholder="PricePerYear" id="pricePerYear" />
+          <input placeholder="TeamName" id="teamName" />
+          <input placeholder="MinAge" id="minAge" />
+          <input placeholder="MaxAge" id="maxAge" />
+          <input placeholder="Sport" id="sport" />
+          <button onClick={addNewSportTeam}>Click</button>
         </form>
       </div>
     </div>

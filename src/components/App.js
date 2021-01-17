@@ -33,10 +33,6 @@ function App() {
     <div>
       <Header />
       <Switch>
-        <Route path="/sport">
-          <TableOfSports />
-        </Route>
-
         {!loggedIn ? (
           <div>
             <Route exact path="/">
