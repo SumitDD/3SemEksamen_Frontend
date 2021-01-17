@@ -10,31 +10,51 @@ function TableOfSports() {
     },
   ];
 
+  let allSportTeams = [
+    {
+      pricePerYear: "",
+      teamName: "",
+      minAge: "",
+      maxAge: "",
+      sport: "",
+    },
+  ];
+
   const [dataFromServerObj, setDataFromServerObj] = useState(allSports);
+  const [sportDataFromServerObj, setSportDataFromServerObj] = useState(
+    allSportTeams
+  );
 
   const [reloadTable, setReloadTable] = useState(false);
 
   useEffect(() => {
-    setDataFromServerObj(allSports);
+    facade.fetchAllSports().then((data) => setDataFromServerObj(data));
+    facade.fetchAllSportTeams().then((data) => setSportDataFromServerObj(data));
   }, []);
 
-  const getAllSports = (evt) => {
-    evt.preventDefault();
-    facade.fetchAllSports().then((data) => setDataFromServerObj(data));
-  };
+  const sportTeamItems = sportDataFromServerObj.map((sportteam) => (
+    <tr key={sportteam.teamName}>
+      <td>{sportteam.teamName}</td>
+      <td>{sportteam.pricePerYear}</td>
+      <td>{sportteam.minAge}</td>
+      <td>{sportteam.maxAge}</td>
+      <td>{sportteam.sport}</td>
+    </tr>
+  ));
 
   const sportItems = dataFromServerObj.map((sport) => (
     <tr key={sport.name}>
-      <th scope="row"></th>
       <td>{sport.name}</td>
       <td>{sport.description}</td>
     </tr>
   ));
+  console.log(sportDataFromServerObj);
 
   return (
     <div>
       <table class="table">
         <thead>
+          <h3>ALL SPORTS</h3>
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
@@ -43,13 +63,19 @@ function TableOfSports() {
         <tbody> {sportItems}</tbody>
       </table>
 
-      <div className="row mt-5">
-        <div className="col-3">
-          <h2>Get all sports</h2>
-          <button onClick={getAllSports}>Click</button>
-        </div>
-        <div className="col-3"></div>
-      </div>
+      <table class="table">
+        <thead>
+          <h3>ALL SPORTSTEAMS</h3>
+          <tr>
+            <th scope="col">Teamname</th>
+            <th scope="col">PricePerYear</th>
+            <th scope="col">MinAge</th>
+            <th scope="col">MaxAge</th>
+            <th scope="col">Sport</th>
+          </tr>
+        </thead>
+        <tbody>{sportTeamItems}</tbody>
+      </table>
     </div>
   );
 }

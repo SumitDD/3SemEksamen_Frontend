@@ -3,9 +3,6 @@ import facade from "../utils/apiFacade.js";
 import TableOfSports from "./SportTableUser.js";
 import LogIn, { LoggedIn } from "./LogIn.js";
 import Header from "./Header.js";
-import Starwars from "./Starwars.js";
-import Admin from "./Admin.js";
-import User from "./User.js";
 import SportTableUser from "./SportTableUser.js";
 import SportTableAdmin from "./SportTableAdmin.js";
 import { Switch, Route } from "react-router-dom";
@@ -13,7 +10,6 @@ import { Switch, Route } from "react-router-dom";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
-  //const [role, setRole] = useState("");
 
   const logout = () => {
     facade.logout();
@@ -52,12 +48,11 @@ function App() {
                 admin.
                 <br />
                 <br />
-                Man kan tilgå Starwars-route uanset om man er logget ind.
-                <br />
-                Komponentet fetcher fra swapi.com, fra fem forskellige
-                endpoints. Et for hver linje.
                 <br />
               </p>
+            </Route>
+            <Route path="/usersport">
+              <SportTableUser />
             </Route>
           </div>
         ) : (
@@ -68,17 +63,9 @@ function App() {
                 <button onClick={logout}>Logout</button>
               </Route>
             </div>
+            <div></div>
             <div>
-              <Route path="/user">
-                {facade.getRole() === "user" ? (
-                  <SportTableUser />
-                ) : (
-                  <p>Du er ikke logget ind som user</p>
-                )}
-              </Route>
-            </div>
-            <div>
-              <Route path="/admin">
+              <Route path="/adminsport">
                 {facade.getRole() === "admin" ? (
                   <SportTableAdmin />
                 ) : (
