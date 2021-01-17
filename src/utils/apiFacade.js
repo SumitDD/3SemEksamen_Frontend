@@ -62,6 +62,19 @@ function apiFacade() {
 
     return fetch(URL + "/api/sport/allsports", options).then(handleHttpErrors);
   };
+  const addNewSportTeam = (sportTeam) => {
+    const options = makeOptions("PUT", true, {
+      pricePerYear: sportTeam.pricePerYear,
+      teamName: sportTeam.teamName,
+      minAge: sportTeam.minAge,
+      maxAge: sportTeam.maxAge,
+      sport: sportTeam.sport,
+    }); //True add's the token
+
+    return fetch(URL + "/api/sport/addsportteam", options).then(
+      handleHttpErrors
+    );
+  };
 
   const addNewSport = (sport) => {
     const options = makeOptions("POST", true, {
@@ -105,6 +118,7 @@ function apiFacade() {
     getRole,
     fetchAllSports,
     addNewSport,
+    addNewSportTeam,
   };
 }
 

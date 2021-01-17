@@ -20,12 +20,6 @@ function Header(props) {
             Admin
           </NavLink>
         </li>
-
-        <li>
-          <NavLink activeClassName="active" to="/sport">
-            Sports
-          </NavLink>
-        </li>
       </ul>
     </div>
   );
