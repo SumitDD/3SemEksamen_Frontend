@@ -57,6 +57,21 @@ function apiFacade() {
     return fetch(URL + "/api/info/" + role, options).then(handleHttpErrors);
   };
 
+  const fetchAllSports = () => {
+    const options = makeOptions("GET"); //True add's the token
+
+    return fetch(URL + "/api/sport/allsports", options).then(handleHttpErrors);
+  };
+
+  const addNewSport = (sport) => {
+    const options = makeOptions("POST", true, {
+      name: sport.name,
+      description: sport.description,
+    }); //True add's the token
+    console.log(sport);
+    return fetch(URL + "/api/sport/addsport", options).then(handleHttpErrors);
+  };
+
   const fetchStarwars = () => {
     const options = makeOptions("GET");
 
@@ -87,7 +102,9 @@ function apiFacade() {
     logout,
     fetchData,
     fetchStarwars,
-    getRole
+    getRole,
+    fetchAllSports,
+    addNewSport,
   };
 }
 
