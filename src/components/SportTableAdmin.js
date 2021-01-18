@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import facade from "../utils/apiFacade.js";
 import React, { useState, useEffect } from "react";
-import SportTeamTable from "./SportTeamAdmin.js";
 
 function TableOfSports() {
   let allSports = [
@@ -23,20 +22,46 @@ function TableOfSports() {
     maxAge: "",
     sport: "",
   };
+  let allSportTeams = [
+    {
+      pricePerYear: "",
+      teamName: "",
+      minAge: "",
+      maxAge: "",
+      sport: "",
+    },
+  ];
 
   const [dataFromServerObj, setDataFromServerObj] = useState(allSports);
   const [newDataFromServerObj, setNewDataFromServerObj] = useState(newSport);
   const [newSportTeamFromSever, setNewSportTeamFromServer] = useState(
     newSportTeam
   );
-  const [reloadTable, setReloadTable] = useState(false);
+  const [sportDataFromServerObj, setSportDataFromServerObj] = useState(
+    allSportTeams
+  );
 
-  const onChangeNewUser = (evt) => {
+  useEffect(() => {
+    facade.fetchAllSports().then((data) => setDataFromServerObj(data));
+  }, [dataFromServerObj]);
+
+  useEffect(() => {
+    facade.fetchAllSportTeams().then((data) => setSportDataFromServerObj(data));
+  }, [sportDataFromServerObj]);
+
+  const onChangeNewSport = (evt) => {
     evt.preventDefault();
     setNewDataFromServerObj({
       ...newDataFromServerObj,
       [evt.target.id]: evt.target.value,
     });
+  };
+
+  const deleteSportTeam = (evt) => {
+    evt.preventDefault();
+    let teamName = evt.target.id;
+
+    facade.deleteSportTeam(teamName);
   };
 
   const createNewSport = (evt) => {
@@ -55,20 +80,25 @@ function TableOfSports() {
     evt.preventDefault();
     facade.addNewSportTeam(newSportTeamFromSever);
   };
-  console.log(newSportTeamFromSever);
+
   const sportItems = dataFromServerObj.map((sport) => (
     <tr key={sport.name}>
       <td>{sport.name}</td>
       <td>{sport.description}</td>
-      <button onClick={createNewSport}>Delete</button>
     </tr>
   ));
-
-  useEffect(() => {
-    facade.fetchAllSports().then((data) => setDataFromServerObj(data));
-    setReloadTable(false);
-  }, [reloadTable]);
-
+  const sportTeamItems = sportDataFromServerObj.map((sportteam) => (
+    <tr key={sportteam.teamName}>
+      <td>{sportteam.teamName}</td>
+      <td>{sportteam.pricePerYear}</td>
+      <td>{sportteam.minAge}</td>
+      <td>{sportteam.maxAge}</td>
+      <td>{sportteam.sport}</td>
+      <button id={sportteam.teamName} onClick={deleteSportTeam}>
+        Delete
+      </button>
+    </tr>
+  ));
   return (
     <div>
       <table class="table">
@@ -83,13 +113,13 @@ function TableOfSports() {
 
       <div className="col-3">
         <h2>Add new Sport</h2>
-        <form onChange={onChangeNewUser}>
+        <form onChange={onChangeNewSport}>
           <input placeholder="Name" id="name" />
           <input placeholder="Description" id="description" />
           <button onClick={createNewSport}>Click</button>
         </form>
       </div>
-
+      <br></br>
       <div className="col-3">
         <h2>Add new Sportteam</h2>
         <form onChange={onChangeNewSportTeam}>
@@ -101,6 +131,20 @@ function TableOfSports() {
           <button onClick={addNewSportTeam}>Click</button>
         </form>
       </div>
+      <br></br>
+      <table class="table">
+        <thead>
+          <h3>ALL SPORTSTEAMS</h3>
+          <tr>
+            <th scope="col">Teamname</th>
+            <th scope="col">PricePerYear</th>
+            <th scope="col">MinAge</th>
+            <th scope="col">MaxAge</th>
+            <th scope="col">Sport</th>
+          </tr>
+        </thead>
+        <tbody>{sportTeamItems}</tbody>
+      </table>
     </div>
   );
 }

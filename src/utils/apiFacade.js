@@ -44,7 +44,6 @@ function apiFacade() {
     let decoedeJsonData = window.atob(tokenData);
     let decodedJwtData = JSON.parse(decoedeJsonData);
     let role = decodedJwtData.roles;
-    console.log(role);
 
     return role;
   };
@@ -54,7 +53,7 @@ function apiFacade() {
 
     let role = getRole();
 
-    return fetch(URL + "/api/info/" + role, options).then(handleHttpErrors);
+    return fetch(URL + "/api/sport/" + role, options).then(handleHttpErrors);
   };
 
   const fetchAllSports = () => {
@@ -88,6 +87,13 @@ function apiFacade() {
   const fetchAllSportTeams = () => {
     const options = makeOptions("GET");
     return fetch(URL + "/api/sport/allsportteams", options).then(
+      handleHttpErrors
+    );
+  };
+
+  const deleteSportTeam = (teamName) => {
+    const options = makeOptions("DELETE");
+    return fetch(URL + "/api/sport/deletesportteam/" + teamName, options).then(
       handleHttpErrors
     );
   };
@@ -127,6 +133,7 @@ function apiFacade() {
     addNewSport,
     addNewSportTeam,
     fetchAllSportTeams,
+    deleteSportTeam,
   };
 }
 
