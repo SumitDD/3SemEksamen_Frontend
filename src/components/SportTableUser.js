@@ -48,7 +48,6 @@ function TableOfSports() {
       <td>{sport.description}</td>
     </tr>
   ));
-  console.log(sportDataFromServerObj);
 
   return (
     <div>

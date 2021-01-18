@@ -34,18 +34,14 @@ function App() {
             <Route exact path="/">
               <LogIn login={login} />
               <p>{error}</p>
-              <h3>Hejsa, hvis du ikke er Lukas, så velkommen:</h3>
+              <h3>Hejsa, Velkommen:</h3>
               <p>
-                Dette er velkomstsiden til vores startcode.
+                Dette er velkomstsiden til 3 semester programmeringseksamen.
                 <br />
                 Log ind som user/testuser eller admin/testadmin.
                 <br />
                 Som user og admin kan man tilgå begge brugerheadere.
                 <br />
-                Afhængigt af hvilken rolle man har, får man fremvist en
-                <br />
-                besked, der fortæller om man er logget ind som bruger eller
-                admin.
                 <br />
                 <br />
                 <br />
